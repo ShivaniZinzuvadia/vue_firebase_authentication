@@ -1,13 +1,44 @@
 <template>
   <div id="app">
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div> -->
-    <img src="./assets/logo.png" alt="">
-    <router-view/>
+    <div>
+      <b-navbar toggleable="lg" type="dark" variant="info">
+        <b-navbar-brand href="#">Chat Application</b-navbar-brand>
+
+        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+        <b-collapse id="nav-collapse" is-nav>
+          <!-- Right aligned nav items -->
+          <b-navbar-nav class="ml-auto">
+              <b-nav-item href="#" v-if="currentUser">Profile</b-nav-item>
+              <b-nav-item href="#" v-if="currentUser" @click="logout">Sign Out</b-nav-item>
+          </b-navbar-nav>
+        </b-collapse>
+      </b-navbar>
+    </div>
+    <router-view />
   </div>
 </template>
+
+<script>
+import {auth} from './firebase'
+import { mapGetters } from 'vuex'
+export default {
+  methods: {
+    logout(){
+      auth.signOut()
+      .then(() => {
+        this.$router.replace('login');
+      }, err => {
+        alert('Error:' + err.message);
+      })
+    }
+  },
+  computed: { ...mapGetters({
+    currentUser: 'auth/currentUser'
+  })
+  }
+}
+</script>
 
 <style>
 #app {

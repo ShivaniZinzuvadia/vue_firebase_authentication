@@ -41,8 +41,7 @@ export default {
     },
     socialLogin: function() {
       auth.signInWithPopup(googleProvider)
-      .then((result) => {
-        console.log(result);
+      .then(() => {
         this.$router.replace("home");
       }, 
       (error) => {
