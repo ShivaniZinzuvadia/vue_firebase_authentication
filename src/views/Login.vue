@@ -6,7 +6,6 @@
     <button @click="login">Connection</button>
     <p>
       Or signin with Google <br />
-      or Sign In with Google <br />
       <button @click="socialLogin" class="social-button">
         <img alt="Google Logo" src="../assets/google-logo.png" />
       </button>
@@ -25,14 +24,15 @@ export default {
   data: function () {
     return {
       email: "shivani.zinzuvadia@aliansoftware.com",
-      password: "shivani",
+      password: "shivanizinzu",
     };
   },
   methods: {
     login: function () {
       auth.signInWithEmailAndPassword(this.email, this.password).then(
         () => {
-          this.$router.replace("home");
+          // console.log(result.user.udi);
+          this.$router.replace("profile");
         },
         (err) => {
           alert("Error:" + err.message);
