@@ -16,9 +16,9 @@ let app;
 auth.onAuthStateChanged(async (result) => {
   // Fetch logged in user details from databasae and set in the store
   if (result) {
-    store.dispatch("auth/getLoggedInUser", result.uid);
+    store.dispatch("user/getLoggedInUser", result.uid);
   } else {
-    store.dispatch("auth/unsetUser");
+    store.dispatch("user/unsetUser");
   }
 
   if (!app) {

@@ -58,7 +58,7 @@ import { mapGetters } from "vuex";
 export default {
   computed: {
     ...mapGetters({
-      currentUser: "auth/currentUser",
+      currentUser: "user/currentUser",
     }),
   },
   data() {
@@ -82,7 +82,7 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.$store.dispatch("auth/updateProfile", this.form);
+      this.$store.dispatch("user/updateProfile", this.form);
       this.$router.push("/home");
     },
     onReset() {

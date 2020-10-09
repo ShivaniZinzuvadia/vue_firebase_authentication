@@ -2,16 +2,21 @@ import { db } from "../../firebase";
 
 export const state = {
   currentUser: null,
+  allUsers: []
 };
 
 export const getters = {
   currentUser: (state) => state.currentUser,
+  allUsers: (state) => state.allUsers
 };
 
 export const mutations = {
   SET_USER(state,  user) {
     state.currentUser = user;
   },
+  SET_ALL_USERS(state, users){
+    state.allUsers = users;
+  }
 };
 
 export const actions = {
@@ -43,6 +48,17 @@ export const actions = {
     .update(profileData)
     .then(() => {
       commit("SET_USER",{ uid: uid ,user: profileData });
+    })
+  },
+
+  getAllUsers({commit}){
+    db.collection('users').where("displayName", "!=", "")
+    .onSnapshot(function(querySnapshot){
+      let users = [];
+      querySnapshot.forEach(function(doc) {
+        users.push({...doc.data(), id: doc.id});
+      });
+      commit("SET_ALL_USERS",users);
     })
   }
 };

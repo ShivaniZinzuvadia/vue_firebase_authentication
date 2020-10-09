@@ -28,7 +28,7 @@ export default {
             displayName: "",
             email: result.user.email,
           };
-          await this.$store.dispatch("auth/setUser", {uid: result.user.uid, user: user});
+          await this.$store.dispatch("user/setUser", {uid: result.user.uid, user: user});
           this.$router.replace("home");
         })
         .catch((error) => {
