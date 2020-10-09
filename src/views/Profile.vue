@@ -5,7 +5,7 @@
     </template>
 
     <div>
-      <b-form @submit.prevent="onSubmit" @reset.prevent="onReset">
+      <b-form @submit.prevent="onSubmit" @reset.prevent="onReset" v-if="form">
         <b-form-group
           id="input-group-1"
           label="Email address:"
@@ -71,21 +71,25 @@ export default {
     };
   },
   watch: {
-      currentUser(value){
-        this.form.email = value.email;
-        this.form.displayName = value.displayName;
-        this.form.userName = value.userName;
-      }
+    currentUser: {
+      handler: function (value) {
+        this.form.email = value.user.email;
+        this.form.displayName = value.user.displayName;
+        this.form.userName = value.user.userName;
+      },
+      immediate: true,
+    },
   },
   methods: {
     onSubmit() {
-      alert(JSON.stringify(this.form));
+      this.$store.dispatch("auth/updateProfile", this.form);
+      this.$router.push("/home");
     },
     onReset() {
       // Reset our form values
-      this.form.email = this.currentUser.email;
-      this.form.displayName = this.currentUser.displayName;
-      this.form.userName = this.currentUser.email;
+      this.form.email = this.currentUser.user.email;
+      this.form.displayName = this.currentUser.user.displayName;
+      this.form.userName = this.currentUser.user.userName;
       // Trick to reset/clear native browser form validation state
       this.$nextTick(() => {
         this.show = true;
